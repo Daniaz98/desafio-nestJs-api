@@ -1,0 +1,22 @@
+### list assets
+GET http://localhost:3000/assets
+
+### create assets
+POST http://localhost:3000/assets
+Content-Type: application/json
+
+{
+  "symbol": "teste",
+}
+
+### list orders
+GET http://localhost:3000/orders
+
+### create orders
+POST http://localhost:3000/orders
+Content-Type: application/json
+
+{
+  "id_asset": "2",
+  "price": 200
+}

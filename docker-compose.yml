@@ -1,0 +1,37 @@
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    ports:
+      - "27017:27017" # Mapeia a porta 27017 do MongoDB
+    volumes:
+      - mongo-data:/data/db  
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=teste10
+    networks:
+      - app-network
+
+  nest-app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: nest-app
+    ports:
+      - "3000:3000" 
+    depends_on:
+      - mongodb
+    environment:
+      - DATABASE_URL=mongodb://root:teste10@mongo:27017/orders_assets?authSource=admin
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+    driver: local
